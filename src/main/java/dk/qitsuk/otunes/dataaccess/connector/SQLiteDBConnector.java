@@ -16,15 +16,13 @@ public class SQLiteDBConnector {
         return instance;
     }
 
-    private SQLiteDBConnector() {
+    public static Connection getConnection() {
         try  {
             connection = DriverManager.getConnection(URL);
         } catch (SQLException sqe) {
             sqe.printStackTrace();
             System.exit(-1);
         }
-    }
-    public static Connection getConnection() {
         return connection;
     }
 }
