@@ -25,9 +25,13 @@ public class CustomerController {
         return customerDAO.getCustomerById(id);
     }
     @GetMapping("/api/getCustomerByName")
-    public Customer getCustomerByName(@RequestParam String firstName, String lastName) {
+    public Customer getCustomerByName(@RequestParam String fn, String ln) {
         customerDAO = new CustomerDAO();
-        return customerDAO.getCustomerByName(firstName, lastName);
+        return customerDAO.getCustomerByName(fn, ln);
     }
-
+    @GetMapping("/api/getCustomerSection")
+    public ArrayList<Customer> getCustomerSection(@RequestParam int o, int l) {
+        customerDAO = new CustomerDAO();
+        return customerDAO.getCustomerSection(o, l);
+    }
 }
