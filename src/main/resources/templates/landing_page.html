@@ -24,12 +24,29 @@
         </div>
     </div>
 </div>
-
 <div>
-    <tr th:each="track: ${tracks}">
-        <td th:text="${track.getName()}"></td>
-        <td th:text="${track.getComposer()}"></td>
-    </tr>
+    <div>
+        <table class="table" style="width: 30%; display: inline-block">
+            <tr>
+                <th>Track Name</th>
+                <th>Track Composer</th>
+            </tr>
+            <tr th:each="track: ${tracks}">
+                <td th:text="${track.getName()}"></td>
+                <td th:text="${track.getComposer()}"></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table class="table" style="width: 30%; display: inline-block">
+            <tr>
+                <th>Genre Name</th>
+            </tr>
+            <tr th:each="genre: ${genres}">
+                <td th:text="${genre.getName()}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 </body>
