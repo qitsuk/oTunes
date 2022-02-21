@@ -3,7 +3,6 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
