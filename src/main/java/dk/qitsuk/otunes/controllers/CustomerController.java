@@ -12,16 +12,22 @@ import java.util.ArrayList;
 public class CustomerController {
 
     private final ArrayList<Customer> customers = new ArrayList<>();
+    private CustomerDAO customerDAO;
 
     @GetMapping("/api/getAllCustomers")
     private ArrayList<Customer> getAllCustomer() {
-        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO = new CustomerDAO();
         return customerDAO.getAllCustomers();
     }
     @GetMapping("/api/getCustomerById")
     private Customer getCustomerById(@RequestParam int id) {
-        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO = new CustomerDAO();
         return customerDAO.getCustomerById(id);
+    }
+    @GetMapping("/api/getCustomerByName")
+    public Customer getCustomerByName(@RequestParam String firstName, String lastName) {
+        customerDAO = new CustomerDAO();
+        return customerDAO.getCustomerByName(firstName, lastName);
     }
 
 }
