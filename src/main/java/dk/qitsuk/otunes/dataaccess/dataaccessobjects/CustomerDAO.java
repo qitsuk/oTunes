@@ -3,6 +3,7 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,8 @@ public class CustomerDAO {
     public ArrayList<Customer> getAllCustomers() {
         customers = new ArrayList<>();
         String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
-        try (Connection conn = SQLiteDBConnector.getInstance().getConnection()) {
+        try {
+            Connection conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -34,5 +36,32 @@ public class CustomerDAO {
             System.exit(-1);
         }
         return customers;
+    }
+
+    public Customer getCustomerById(int id) {
+        Customer customer = null;
+        String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE " +
+                "CustomerId=?";
+        try {
+            Connection conn = SQLiteDBConnector.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                customer = new Customer(
+                        rs.getInt("CustomerId"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Country"),
+                        rs.getString("PostalCode"),
+                        rs.getString("Phone"),
+                        rs.getString("Email")
+                );
+            }
+        } catch(SQLException sqe) {
+            sqe.printStackTrace();
+            System.exit(-1);
+        }
+        return customer;
     }
 }

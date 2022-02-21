@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLiteDBConnector {
+
     private final static String URL = "jdbc:sqlite:src/main/resources/Chinook_Sqlite.sqlite";
     private static SQLiteDBConnector instance;
     private static Connection connection;
