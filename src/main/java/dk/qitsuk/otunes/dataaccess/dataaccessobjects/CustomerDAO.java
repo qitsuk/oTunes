@@ -1,6 +1,7 @@
 package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
+import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 
 import java.sql.*;
@@ -10,6 +11,7 @@ public class CustomerDAO {
     private ArrayList<Customer> customers;
     private ArrayList<Customer> customerSection;
     private Connection conn;
+    private Customer customer;
 
     public ArrayList<Customer> getAllCustomers() {
         customers = new ArrayList<>();
@@ -19,8 +21,7 @@ public class CustomerDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customers.add(new Customer(
-                        rs.getInt("CustomerId"),
+                customers.add(customer = new Customer(
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getString("Country"),
@@ -28,6 +29,7 @@ public class CustomerDAO {
                         rs.getString("Phone"),
                         rs.getString("Email")
                 ));
+                customer.setId(rs.getInt("CustomerId"));
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -44,7 +46,6 @@ public class CustomerDAO {
     }
 
     public Customer getCustomerById(int id) {
-        Customer customer = null;
         String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE " +
                 "CustomerId=?";
         try {
@@ -54,7 +55,6 @@ public class CustomerDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 customer = new Customer(
-                        rs.getInt("CustomerId"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getString("Country"),
@@ -62,6 +62,7 @@ public class CustomerDAO {
                         rs.getString("Phone"),
                         rs.getString("Email")
                 );
+                customer.setId(rs.getInt("CustomerId"));
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -78,7 +79,6 @@ public class CustomerDAO {
     }
 
     public Customer getCustomerByName(String firstName, String lastName) {
-        Customer customer = null;
         String sql = "SELECT * FROM Customer WHERE FirstName=? AND LastName=?";
 
         try {
@@ -89,7 +89,6 @@ public class CustomerDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 customer = new Customer(
-                        rs.getInt("CustomerID"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getString("Country"),
@@ -97,6 +96,7 @@ public class CustomerDAO {
                         rs.getString("Phone"),
                         rs.getString("Email")
                 );
+                customer.setId(rs.getInt("CustomerId"));
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -122,8 +122,7 @@ public class CustomerDAO {
             ps.setInt(2, limit);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customerSection.add(new Customer(
-                        rs.getInt("CustomerID"),
+                customerSection.add(customer = new Customer(
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getString("Country"),
@@ -131,6 +130,7 @@ public class CustomerDAO {
                         rs.getString("Phone"),
                         rs.getString("Email")
                 ));
+                customer.setId(rs.getInt("CustomerId"));
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -147,7 +147,7 @@ public class CustomerDAO {
     }
 
     public Customer updateCustomerById(Customer customer, int id) {
-        String sql = "UPDATE Customer set firstName=?, lastName=?, country=?, postalcode=?, phoneNumber=?, email=? WHERE" + "CustomerId=? ";
+        String sql = "UPDATE Customer set FirstName=?, LastName=?, Country=?, PostalCode=?, Phone=?, Email=? WHERE CustomerId=? ";
         try {
             conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -158,18 +158,7 @@ public class CustomerDAO {
             ps.setString(5, customer.getPhoneNumber());
             ps.setString(6, customer.getEmail());
             ps.setInt(7, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                customer = new Customer(
-                        rs.getInt("CustomerId"),
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Country"),
-                        rs.getString("PostalCode"),
-                        rs.getString("Phone"),
-                        rs.getString("Email")
-                );
-            }
+            ps.executeUpdate();
         } catch (SQLException sqe) {
             sqe.printStackTrace();
             System.exit(-1);
@@ -184,27 +173,18 @@ public class CustomerDAO {
         return customer;
     }
 
-    public Customer numCustomerCountry(int id) {
-        Customer customer = null;
-        String sql = "SELECT COUNT(CustomerId), Country\n" +
-                "FROM Customer\n" +
-                "GROUP by Country\n" +
-                "ORDER BY COUNT(?) DESC";
+    public ArrayList<CountryCount> numCustomerCountry() {
+        ArrayList<CountryCount> countryCountList = new ArrayList<>();
+        String sql = "SELECT COUNT(CustomerId) AS NumberOfCustomers, Country FROM Customer GROUP BY Country ORDER BY COUNT(CustomerId) DESC";
         try {
-             conn = SQLiteDBConnector.getInstance().getConnection();
+            conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customer = new Customer(
-                        rs.getInt("CustomerId"),
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Country"),
-                        rs.getString("PostalCode"),
-                        rs.getString("Phone"),
-                        rs.getString("Email")
-                );
+                countryCountList.add(new CountryCount(
+                        rs.getInt("NumberOfCustomers"),
+                        rs.getString("Country")
+                ));
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -217,7 +197,7 @@ public class CustomerDAO {
                 System.exit(-1);
             }
         }
-        return customer;
+        return countryCountList;
     }
 
 }
