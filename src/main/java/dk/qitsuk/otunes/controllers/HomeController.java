@@ -8,6 +8,7 @@ import dk.qitsuk.otunes.dataaccess.models.Genre;
 import dk.qitsuk.otunes.dataaccess.models.Track;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,5 +38,7 @@ public class HomeController {
     }
 
     @PostMapping("/search")
-    public String searchDB
+    public String searchDB(@ModelAttribute("searchForm") Track formData, Model model){
+        Track track =
+    }
 }
