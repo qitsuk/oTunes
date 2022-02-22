@@ -1,13 +1,16 @@
 package dk.qitsuk.otunes.controllers;
 
 import dk.qitsuk.otunes.dataaccess.dataaccessobjects.CustomerDAO;
+import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @RestController
 public class CustomerController {
@@ -39,4 +42,21 @@ public class CustomerController {
         customerDAO = new CustomerDAO();
         return customerDAO.getCustomerSection(offset, limit);
     }
+
+    @GetMapping("/api/getCustomerInCountry")
+    @Operation(summary = "Get all customers in all countries and list them from most to least in each country.")
+    public ArrayList<CountryCount> getCountryCount() {
+        customerDAO = new CustomerDAO();
+        return customerDAO.numCustomerCountry();
+    }
+
+    @PostMapping("/api/updateCustomerById")
+    @Operation(summary = "Updating a customer found by id.")
+    public String updateCustomerById(Customer customer, @RequestParam int id) {
+        customerDAO = new CustomerDAO();
+        customerDAO.updateCustomerById(customer, id);
+        return "Customer updated.";
+    }
+
+
 }

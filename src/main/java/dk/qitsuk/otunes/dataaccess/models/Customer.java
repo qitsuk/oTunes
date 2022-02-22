@@ -11,9 +11,7 @@ public class Customer {
     private String email;
 
     // A public constructor, to instantiate instances of the Customer.
-    public Customer(int id, String firstName, String lastName, String country,
-                    String postalCode, String phoneNumber, String email) {
-        this.id = id;
+    public Customer(String firstName, String lastName, String country, String postalCode, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
@@ -21,6 +19,10 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+   /* public Customer(int id, String firstName, String lastName, String country, String postalCode, String phoneNumber, String email) {
+        this(firstName, lastName, country, postalCode, phoneNumber, email);
+        this.id = id;
+    }*/
 
     // region Getters and Setters
     public int getId() {
@@ -61,6 +63,10 @@ public class Customer {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     // endregion
 }
