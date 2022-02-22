@@ -39,4 +39,7 @@ public class CustomerController {
         customerDAO = new CustomerDAO();
         return customerDAO.getCustomerSection(offset, limit);
     }
+
+
+
 }
