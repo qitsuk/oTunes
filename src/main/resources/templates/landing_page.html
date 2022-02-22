@@ -25,40 +25,37 @@
         </div>
     </div>
 </div>
-<div>
+<div style="width: 100%;">
     <div>
-        <table class="table" style="width: 30%; display: inline-block">
+        <table class="table" style="width: 33%; float: left;">
             <tr>
-                <th>Track Name</th>
-                <th>Track Composer</th>
-            </tr>
-            <tr th:each="track: ${tracks}">
-                <td th:text="${track.getName()}"></td>
-                <td th:text="${track.getComposer()}">No composer info found.</td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <table class="table" style="width: 30%; display: inline-block">
-            <tr>
-                <th>Genre Name</th>
+                <th>5 Random Genres</th>
             </tr>
             <tr th:each="genre: ${genres}">
                 <td th:text="${genre.getName()}"></td>
             </tr>
         </table>
     </div>
+    <div style="width: 33%; float: left;">
+        <table class="table">
+            <tr>
+                <th>5 Random Songs</th>
+            </tr>
+            <tr th:each="track: ${tracks}">
+                <td th:text="${track.getName()}"></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table class="table" style="width: 33%; float: left;">
+            <tr>
+                <th>5 Random Artists</th>
+            </tr>
+            <tr th:each="artist: ${artists}">
+                <td th:text="${artist.getName()}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
-<div>
-    <table class="table">
-        <tr>
-            <th>Artist Name</th>
-        </tr>
-        <tr th:each="artist: ${artists}">
-            <td th:text="${artist.getName()}"></td>
-        </tr>
-    </table>
-</div>
-
 </body>
 </html>
