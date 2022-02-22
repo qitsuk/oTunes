@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GenreDAO {
+public class GenreRepository {
     private ArrayList<Genre> genreList;
     private Connection conn;
 

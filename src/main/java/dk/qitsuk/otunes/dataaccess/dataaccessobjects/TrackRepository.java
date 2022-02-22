@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TrackDAO {
+public class TrackRepository {
     private ArrayList<Track> trackList;
     private Connection conn;
 

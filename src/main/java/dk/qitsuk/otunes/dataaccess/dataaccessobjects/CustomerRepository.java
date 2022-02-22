@@ -3,12 +3,11 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDAO {
+public class CustomerRepository {
     private ArrayList<Customer> customers;
     private ArrayList<Customer> customerSection;
     private Connection conn;
