@@ -16,7 +16,7 @@ public class SQLiteDBConnector {
         return instance;
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try  {
             connection = DriverManager.getConnection(URL);
         } catch (SQLException sqe) {
