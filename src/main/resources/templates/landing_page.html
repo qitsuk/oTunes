@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Welcome to oTunes</title>
@@ -33,7 +34,7 @@
             </tr>
             <tr th:each="track: ${tracks}">
                 <td th:text="${track.getName()}"></td>
-                <td th:text="${track.getComposer()}"></td>
+                <td th:text="${track.getComposer()}">No composer info found.</td>
             </tr>
         </table>
     </div>
@@ -47,6 +48,16 @@
             </tr>
         </table>
     </div>
+</div>
+<div>
+    <table class="table">
+        <tr>
+            <th>Artist Name</th>
+        </tr>
+        <tr th:each="artist: ${artists}">
+            <td th:text="${artist.getName()}"></td>
+        </tr>
+    </table>
 </div>
 
 </body>

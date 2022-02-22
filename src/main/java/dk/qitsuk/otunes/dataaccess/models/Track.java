@@ -6,11 +6,7 @@ public class Track {
 
     public Track(String name, String composer) {
         this.name = name;
-        if (composer == null) {
-            this.composer = "No composer info found.";
-        } else {
-            this.composer = composer;
-        }
+        this.composer = composer;
     }
 
     // Region Getters And Setters
