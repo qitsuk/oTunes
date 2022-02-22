@@ -2,6 +2,7 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class CustomerDAO {
     private Connection conn;
 
     public ArrayList<Customer> getAllCustomers() {
+
         customers = new ArrayList<>();
         String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
         try {
