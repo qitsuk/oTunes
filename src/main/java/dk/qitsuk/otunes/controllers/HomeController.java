@@ -36,5 +36,6 @@ public class HomeController {
         return "landing_page";
     }
 
-    public String searchDB;
-}
+    @PostMapping("/search")
+    public String searchDB
+

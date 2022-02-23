@@ -5,6 +5,7 @@ import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -174,7 +175,6 @@ public class CustomerRepository {
         }
         return customer;
     }
-
     public Customer addCustomer(Customer customer) {
         String sql = "Insert into Customer (FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?,?,?,?,?,?)";
         try {
@@ -228,7 +228,7 @@ public class CustomerRepository {
         }
         return countryCountList;
     }
-
+  
     public ArrayList<CustomerSpender> customerSpender() {
         ArrayList<CustomerSpender> customerSpenderList = new ArrayList<>();
         String sql = "SELECT (CustomerId) AS CustomerId, Total FROM Invoice ORDER BY Total DESC;\n";
@@ -255,7 +255,5 @@ public class CustomerRepository {
         }
         return customerSpenderList;
     }
-
-
 
 }
