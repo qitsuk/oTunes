@@ -1,8 +1,7 @@
-package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
+package dk.qitsuk.otunes.dataaccess.repositories;
 
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.SearchResult;
-import dk.qitsuk.otunes.dataaccess.models.Track;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

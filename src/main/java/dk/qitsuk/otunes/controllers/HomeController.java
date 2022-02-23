@@ -1,20 +1,18 @@
 package dk.qitsuk.otunes.controllers;
 
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.ArtistRepository;
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.GenreRepository;
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.SearchRepository;
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.TrackRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.ArtistRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.GenreRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.SearchRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.TrackRepository;
 import dk.qitsuk.otunes.dataaccess.models.Artist;
 import dk.qitsuk.otunes.dataaccess.models.Genre;
 import dk.qitsuk.otunes.dataaccess.models.SearchResult;
 import dk.qitsuk.otunes.dataaccess.models.Track;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 

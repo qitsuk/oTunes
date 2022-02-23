@@ -1,6 +1,6 @@
 package dk.qitsuk.otunes.controllers;
 
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.CustomerRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.CustomerRepository;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 import io.swagger.v3.oas.annotations.Operation;
