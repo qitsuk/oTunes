@@ -3,6 +3,8 @@ package dk.qitsuk.otunes.dataaccess.repositories;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -173,6 +175,32 @@ public class CustomerRepository {
         }
         return customer;
     }
+    public Customer addCustomer(Customer customer) {
+        String sql = "Insert into Customer (FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?,?,?,?,?,?)";
+        try {
+            conn = SQLiteDBConnector.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, customer.getFirstName());
+            ps.setString(2, customer.getLastName());
+            ps.setString(3, customer.getCountry());
+            ps.setString(4, customer.getPostalCode());
+            ps.setString(5, customer.getPhoneNumber());
+            ps.setString(6, customer.getEmail());
+            ps.executeUpdate();
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+            System.exit(-1);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException sqe) {
+                sqe.printStackTrace();
+                System.exit(-1);
+            }
+        }
+        return customer;
+    }
+
 
     public ArrayList<CountryCount> numCustomerCountry() {
         ArrayList<CountryCount> countryCountList = new ArrayList<>();
@@ -199,6 +227,33 @@ public class CustomerRepository {
             }
         }
         return countryCountList;
+    }
+  
+    public ArrayList<CustomerSpender> customerSpender() {
+        ArrayList<CustomerSpender> customerSpenderList = new ArrayList<>();
+        String sql = "SELECT (CustomerId) AS CustomerId, Total FROM Invoice ORDER BY Total DESC;\n";
+        try {
+            conn = SQLiteDBConnector.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                customerSpenderList.add(new CustomerSpender(
+                        rs.getInt("CustomerId"),
+                        rs.getFloat("Total")
+                ));
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+            System.exit(-1);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException sqe) {
+                sqe.printStackTrace();
+                System.exit(-1);
+            }
+        }
+        return customerSpenderList;
     }
 
 }

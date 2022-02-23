@@ -3,6 +3,7 @@ package dk.qitsuk.otunes.controllers;
 import dk.qitsuk.otunes.dataaccess.repositories.CustomerRepository;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class CustomerController {
         return customerRepository.getCustomerByName(firstName, lastName);
     }
     @GetMapping("/api/getCustomerSection")
-    @Operation(summary = "Get a section of the customer table with and offset and a limit.")
+    @Operation(summary = "Get a section of the customer table with offset and a limit.")
     public ArrayList<Customer> getCustomerSection(@RequestParam int offset, int limit) {
         customerRepository = new CustomerRepository();
         return customerRepository.getCustomerSection(offset, limit);
@@ -54,5 +55,19 @@ public class CustomerController {
         return "Customer updated.";
     }
 
+    @PostMapping("/api/addCustomer")
+    @Operation(summary = "Adding a row with a new customer")
+    public String addCustomer(Customer customer) {
+        customerRepository = new CustomerRepository();
+        customerRepository.addCustomer(customer);
+        return "Customer created.";
+    }
 
+    @GetMapping("/api/customerSpender")
+    @Operation(summary = "Get customers ordered by invoice desending")
+    public ArrayList<CustomerSpender> getCustomerSpender() {
+        customerRepository = new CustomerRepository();
+        return customerRepository.customerSpender();
+
+    }
 }
