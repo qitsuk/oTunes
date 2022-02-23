@@ -39,8 +39,15 @@ public class HomeController {
 
     @PostMapping("/search")
     public String searchTrack(@ModelAttribute("searchResult") SearchResult searchResult, Model model) {
-        String text = searchResult.getTrackName();
-        System.out.println(text);
+        SearchRepository searchRepo = new SearchRepository();
+        String searchFor = searchResult.getTrackName();
+        System.out.println(searchFor);
+        String searchedForString = "You searched for: \"" + searchResult.getTrackName() + "\"";
+        String res = "Results:";
+        ArrayList<SearchResult> searchResultList = searchRepo.getSearchResults(searchFor);
+        model.addAttribute("results", searchResultList);
+        model.addAttribute("yourSearch", searchedForString);
+        model.addAttribute("result", res);
         return "landing_page";
     }
 }

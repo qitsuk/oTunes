@@ -16,20 +16,20 @@ public class SearchRepository {
 
     public ArrayList<SearchResult> getSearchResults(String searchFor) {
         SearchResult searchResult = null;
+        searchResults = new ArrayList<>();
         String sql = """
-                PRAGMA case_sensitive_like = false; SELECT track.Name As TrackName, album.Title AS Album,
+                SELECT track.Name As TrackName, album.Title AS Album,
                 artist.name AS Artist, genre.Name AS Genre FROM Track AS track
                 INNER JOIN Album AS album ON track.AlbumId = album.AlbumId
                 INNER JOIN Genre AS genre ON track.GenreId = genre.GenreId
                 INNER JOIN Artist artist ON album.ArtistId = artist.ArtistId
-                WHERE track.Name LIKE ?""";
+                WHERE track.Name LIKE """ + "'%" + searchFor + "%'";
         try {
             conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, "'%" + searchFor + "%'");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                searchResults.add(new SearchResult(
+                searchResults.add(searchResult = new SearchResult(
                         rs.getString("TrackName")
                 ));
                 searchResult.setAlbum(rs.getString("Album"));
