@@ -7,6 +7,7 @@ public interface RestRepository <T> {
     Collection<T> getAllCustomer();
     T getCustomerById(int Id);
     T getCustomerByName(String firstName, String lastName);
+    Collection<T>
 
 
 
