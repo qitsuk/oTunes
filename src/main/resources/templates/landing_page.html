@@ -16,11 +16,13 @@
 <div class="text-center">
     <form th:action="@{/search}" method="POST" th:object="${searchResult}" th:required="required">
         <div>
-            <input type="text" id="trackName" name="trackName" th:value="${trackName}">
+            <label class="form-label" for="trackName">Find your favourite song: </label>
         </div>
         <div>
-            <button class="btn btn-primary" type="submit">Search</button>
+            <input class="form-control" type="text" id="trackName" name="trackName" th:value="${trackName}"
+                   placeholder="Enter song title here..." required>
         </div>
+        <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>
 <div>
@@ -29,21 +31,26 @@
             <p th:text="${yourSearch}">
             <p th:text="${result}"></p>
         </div>
-        <div>
-            <table class="table">
-                <tr>
-                    <th>Song</th>
-                    <th>Artist</th>
-                    <th>Album</th>
-                    <th>Genre</th>
-                </tr>
-                <tr th:each="result: ${results}">
-                    <td th:text="${result.getTrackName()}"></td>
-                    <td th:text="${result.getArtist()}"></td>
-                    <td th:text="${result.getAlbum()}"></td>
-                    <td th:text="${result.getGenre()}"></td>
-                </tr>
-            </table>
+        <!--<div th:switch="#{lists.isEmpty(results)}">
+            <div th:case="false">-->
+                <table class="table">
+                    <tr>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Genre</th>
+                    </tr>
+                    <tr th:each="result: ${results}">
+                        <td th:text="${result.getTrackName()}"></td>
+                        <td th:text="${result.getArtist()}"></td>
+                        <td th:text="${result.getAlbum()}"></td>
+                        <td th:text="${result.getGenre()}"></td>
+                    </tr>
+                </table>
+          <!--  </div>
+            <div th:case="true">
+                <h1>Sorry. No songs by that title found.</h1>
+            </div>-->
         </div>
         <div>
 

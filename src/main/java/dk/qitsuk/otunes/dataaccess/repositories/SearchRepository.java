@@ -16,13 +16,17 @@ public class SearchRepository {
     public ArrayList<SearchResult> getSearchResults(String searchFor) {
         SearchResult searchResult = null;
         searchResults = new ArrayList<>();
+        // We know there is a vulnerability here, however, we could not get PreparedStatement to accept
+        // the parameter here. We couldn't figure out why. The sql statement joins 4 different tables
+        // in order to display what the user searched for. The method returns an ArrayList, because
+        // of the wildcard search, which can result in multiple results.
         String sql = """
                 SELECT track.Name As TrackName, album.Title AS Album,
-                artist.name AS Artist, genre.Name AS Genre FROM Track AS track
+                artist.Name AS Artist, genre.Name AS Genre FROM Track AS track
                 INNER JOIN Album AS album ON track.AlbumId = album.AlbumId
                 INNER JOIN Genre AS genre ON track.GenreId = genre.GenreId
                 INNER JOIN Artist artist ON album.ArtistId = artist.ArtistId
-                WHERE track.Name LIKE """ + "'%" + searchFor + "%'";
+                WHERE track.Name LIKE """ + "'%" + searchFor + "%' ORDER BY genre.GenreId ASC";
         try {
             conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
