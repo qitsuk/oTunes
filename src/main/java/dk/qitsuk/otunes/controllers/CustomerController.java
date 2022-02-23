@@ -1,13 +1,10 @@
 package dk.qitsuk.otunes.controllers;
 
-import dk.qitsuk.otunes.dataaccess.dataaccessobjects.CustomerRepository;
+import dk.qitsuk.otunes.dataaccess.repositories.CustomerRepository;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -49,7 +46,7 @@ public class CustomerController {
         return customerRepository.numCustomerCountry();
     }
 
-    @PostMapping("/api/updateCustomerById")
+    @PutMapping("/api/updateCustomerById")
     @Operation(summary = "Updating a customer found by id.")
     public String updateCustomerById(Customer customer, @RequestParam int id) {
         customerRepository = new CustomerRepository();
