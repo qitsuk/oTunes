@@ -17,13 +17,11 @@
     <h1>Welcome to oTunes</h1>
     <h2>The "totally not ripped off from iTunes" music store.</h2>
 </div>
-<div class="container h-100">
-    <div class="d-flex justify-content-center h-100">
-        <div class="searchbar">
-            <input class="search_input" type="text" name="" placeholder="Search...">
-            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
+<div>
+    <form th:action="@{/search}" method="POST" th:object="${searchResult}">
+        <input type="text" id="trackName" name="trackName" th:value="${trackName}">
+        <button type="submit">Search</button>
+    </form>
 </div>
 <div style="width: 100%;">
     <div>
