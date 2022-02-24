@@ -1,10 +1,7 @@
 package dk.qitsuk.otunes.controllers;
 
+import dk.qitsuk.otunes.dataaccess.models.*;
 import dk.qitsuk.otunes.dataaccess.repositories.CustomerRepository;
-import dk.qitsuk.otunes.dataaccess.models.CountryCount;
-import dk.qitsuk.otunes.dataaccess.models.Customer;
-import dk.qitsuk.otunes.dataaccess.models.CustomerGenre;
-import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,15 +69,12 @@ public class CustomerController {
     public ArrayList<CustomerSpender> getCustomerSpender() {
         customerRepository = new CustomerRepository();
         return customerRepository.customerSpender();
-
     }
 
     @GetMapping("/api/customerGenre")
-    @Operation(summary = "Get the most popular genres for customer with Id 20")
-    public ArrayList<CustomerGenre> getCustomerGenre() {
+    @Operation(summary = "Get the most popular genres for a customer with a given id")
+    public Genre getCustomerGenre(@RequestParam int id) {
         customerRepository = new CustomerRepository();
-        return customerRepository.customerGenre();
-
-
+        return customerRepository.customerGenre(id);
     }
 }

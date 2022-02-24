@@ -14,7 +14,7 @@ public class CustomerGenre {
     }
 
 
-    public int getMostPopular() {
+    public int getCount() {
         return MostPopular;
     }
 

@@ -1,10 +1,7 @@
 package dk.qitsuk.otunes.dataaccess.repositories;
 
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
-import dk.qitsuk.otunes.dataaccess.models.CountryCount;
-import dk.qitsuk.otunes.dataaccess.models.Customer;
-import dk.qitsuk.otunes.dataaccess.models.CustomerGenre;
-import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
+import dk.qitsuk.otunes.dataaccess.models.*;
 
 
 import java.sql.*;
@@ -260,23 +257,32 @@ public class CustomerRepository {
         return customerSpenderList;
     }
 
-    public ArrayList<CustomerGenre> customerGenre() {
+    public Genre customerGenre(int id) {
+        Genre mostPopular = null;
+        int highestCount = 0;
         ArrayList<CustomerGenre> customerGenreList = new ArrayList<>();
-        String sql = "SELECT COUNT(G.Name) AS MostPopular, G.Name FROM Genre AS G\n" +
+        String sql = "SELECT COUNT(G.Name) AS Count, G.Name FROM Genre AS G\n" +
                 " INNER JOIN Track T ON T.GenreId = G.GenreId\n" +
                 " INNER JOIN InvoiceLine IL on T.TrackId = IL.TrackId\n" +
                 " INNER JOIN Invoice I on IL.InvoiceId = I.InvoiceId\n" +
                 " INNER JOIN Customer C on I.CustomerId = C.CustomerId\n" +
-                "WHERE C.CustomerId = 20 GROUP BY G.GenreId ORDER BY COUNT(G.GenreId) DESC;";
+                "WHERE C.CustomerId = ? GROUP BY G.GenreId ORDER BY COUNT(G.GenreId) DESC;";
         try {
             conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 customerGenreList.add(new CustomerGenre(
                         rs.getString("Name"),
-                        rs.getInt("MostPopular")
+                        rs.getInt("Count")
                 ));
+            }
+            for(CustomerGenre cg: customerGenreList) {
+                if (cg.getCount() > highestCount) {
+                    highestCount = cg.getCount();
+                    mostPopular = new Genre(cg.getGenreName());
+                }
             }
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -289,7 +295,7 @@ public class CustomerRepository {
                 System.exit(-1);
             }
         }
-        return customerGenreList;
+        return mostPopular;
 
 
     }
