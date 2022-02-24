@@ -12,7 +12,7 @@ Second Java Assignment, primarily concerned with exposing DB's as APIs using Spr
 - [Install](#install)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
-- [Online Deployment](#onlinedeployment)
+- [Online Deployment](#online-deployment)
 - [License](#license)
 
 ## Background
@@ -51,7 +51,7 @@ Gradle will automatically initialize itself and download necessary dependencies 
 
 [Jakob Henriksen (@jakobah37)](https://gitlab.com/jakobah37)
 
-## Online Deployment
+## Online-Deployment
 
 A live version of this project is deployed on Heroku and can be found at https://otunes-spring-app.herokuapp.com/
 
