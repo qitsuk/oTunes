@@ -3,15 +3,13 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerRepositoryImpl {
-    private ArrayList<Customer> customers;
-    private ArrayList<Customer> customerSection;
-    private Connection conn;
-    private Customer customer;
+@Repository
+public class CustomerRepositoryImpl implements CustomerRepository {
 
     public ArrayList<Customer> getAllCustomers() {
         customers = new ArrayList<>();

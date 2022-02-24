@@ -1,7 +1,7 @@
 package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 
-public interface CustomerRepository {
+import dk.qitsuk.otunes.dataaccess.models.Customer;
+
+public interface CustomerRepository extends RestRepository<Customer> {}
 
 
-
-}
