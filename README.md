@@ -59,7 +59,7 @@ A live version of this project is deployed on Heroku and can be found at https:/
 
 [Kasper Gade Andreasen (@qitsuk)](https://github.com/qitsuk)
 
-[Jakob Henriksen (@jakobah37)](https://gitlab.com/jakobah37)
+[Jakob Henriksen (@jako3417)](https://github.com/jako3417)
 
 
 ## License
