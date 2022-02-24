@@ -28,7 +28,7 @@ The application consists of the following:
 
 ### A Primer on URIs
 
-The API endpoints for the `CustomerContoller` look like this:
+The API endpoints for the `CustomerContoller` looks like this:
 
 ```
 GET http://localhost:8080/api/getAlleCustomers
@@ -41,7 +41,7 @@ PUT http://localhost:8080/api/updateCustomerById
 GET http://localhost:8080/api/customerSpender
 GET http://localhost:8080/api/customerGenre
 ```
-The API endpoints for the `HomeContoller` look like this:
+The API endpoints for the `HomeContoller` looks like this:
 ```
 GET http://localhost:8080/
 POST http://localhost:8080/api/search
