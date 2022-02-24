@@ -11,8 +11,8 @@ Second Java Assignment, primarily concerned with exposing DB's as APIs using Spr
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [Maintainers](#maintainers)
 - [Online Deployment](#online-deployment)
+- [Maintainers](#maintainers)
 - [License](#license)
 
 ## Background
@@ -23,7 +23,8 @@ The application consists of the following:
 
 - A basic Rest Controller with one endpoint (`/`) which produces a JSON output.
 - An OpenAPI configuration endpoint at `/.well-known/oas`. The path for this is configured in `./src/main/resources/application.properties`. This is also not a "real" `.well-known` endpoint, however it probably will be at some point and this puts it out of the way. Without specifying this, the path is set to `/v3/api-docs`.
-- The Swagger documentation UI at `https://otunes-spring-app.herokuapp.com//swagger-ui/index.html`.
+- In leau of doing the Postman API call documentation, we opted to implement OpenAPI and Swagger-UI.
+- The Swagger documentation UI can be found at `https://otunes-spring-app.herokuapp.com//swagger-ui/index.html`.
 
 ### A Primer on URIs
 
@@ -45,15 +46,16 @@ GET http://localhost:8080/api/customerGenre
 
 Gradle will automatically initialize itself and download necessary dependencies the first time the wrapper is run. No explicit installation necessary.
 
+## Online-Deployment
+
+A live version of this project is deployed on Heroku and can be found at https://otunes-spring-app.herokuapp.com/
+
 ## Maintainers
 
 [Kasper Gade Andreasen (@qitsuk)](https://github.com/qitsuk)
 
 [Jakob Henriksen (@jakobah37)](https://gitlab.com/jakobah37)
 
-## Online-Deployment
-
-A live version of this project is deployed on Heroku and can be found at https://otunes-spring-app.herokuapp.com/
 
 ## License
 
