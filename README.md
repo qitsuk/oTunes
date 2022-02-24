@@ -12,7 +12,7 @@ Second Java Assignment, primarily concerned with exposing DB's as APIs using Spr
 - [Install](#install)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
-- [Online Deployment](#online deployment)
+- [Online Deployment](#onlinedeployment)
 - [License](#license)
 
 ## Background
