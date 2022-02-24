@@ -41,6 +41,11 @@ PUT http://localhost:8080/api/updateCustomerById
 GET http://localhost:8080/api/customerSpender
 GET http://localhost:8080/api/customerGenre
 ```
+The API endpoints for the `HomeContoller` look like this:
+```
+GET http://localhost:8080/
+POST http://localhost:8080/api/search
+```
 
 ## Install
 
