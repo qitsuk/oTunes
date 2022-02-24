@@ -12,7 +12,7 @@ Second Java Assignment, primarily concerned with exposing DB's as APIs using Spr
 - [Install](#install)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
-- [Contributing](#contributing)
+- [Online Deployment](#online deployment)
 - [License](#license)
 
 ## Background
@@ -23,7 +23,7 @@ The application consists of the following:
 
 - A basic Rest Controller with one endpoint (`/`) which produces a JSON output.
 - An OpenAPI configuration endpoint at `/.well-known/oas`. The path for this is configured in `./src/main/resources/application.properties`. This is also not a "real" `.well-known` endpoint, however it probably will be at some point and this puts it out of the way. Without specifying this, the path is set to `/v3/api-docs`.
-- The Swagger documentation UI at `/swagger-ui/index.html`.
+- The Swagger documentation UI at `https://otunes-spring-app.herokuapp.com//swagger-ui/index.html`.
 
 ### A Primer on URIs
 
@@ -51,5 +51,11 @@ Gradle will automatically initialize itself and download necessary dependencies 
 
 [Jakob Henriksen (@jakobah37)](https://gitlab.com/jakobah37)
 
+## Online Deployment
 
+A live version of this project is deployed on Heroku and can be found at https://otunes-spring-app.herokuapp.com/
+
+## License
+
+This project is licensed under the MIT license.
 
