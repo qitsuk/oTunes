@@ -1,27 +1,39 @@
 package dk.qitsuk.otunes.dataaccess.models;
 
 public class CustomerSpender {
-    private int CustomerId;
-    private float Total;
+    private String firstName;
+    private String lastName;
+    private float total;
 
-    public CustomerSpender(int CustomerID, float Total) {
-        this.CustomerId = CustomerID;
-        this.Total = Total;
+    public CustomerSpender(String firstName, String lastName, float total) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.total = total;
+
     }
 
-    public int getCustomerId() {
-        return CustomerId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setCustomerId(int customerId) {
-        CustomerId = customerId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public float getTotal() {
-        return Total;
+        return total;
     }
 
     public void setTotal(float total) {
-        Total = total;
+        this.total = total;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+
     }
 }

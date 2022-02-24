@@ -3,6 +3,7 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import dk.qitsuk.otunes.dataaccess.models.CustomerGenre;
 import dk.qitsuk.otunes.dataaccess.models.CustomerSpender;
 
 import java.sql.*;
@@ -231,15 +232,18 @@ public class CustomerRepository {
 
     public ArrayList<CustomerSpender> customerSpender() {
         ArrayList<CustomerSpender> customerSpenderList = new ArrayList<>();
-        String sql = "SELECT (CustomerId) AS CustomerId, Total FROM Invoice ORDER BY Total DESC;\n";
+        String sql = "SELECT FirstName, LastName, I.Total FROM Customer\n" +
+                "INNER JOIN Invoice I on Customer.CustomerId = I.CustomerId\n" +
+                "ORDER BY Total DESC;";
         try {
             conn = SQLiteDBConnector.getInstance().getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 customerSpenderList.add(new CustomerSpender(
-                        rs.getInt("CustomerId"),
-                        rs.getFloat("Total")
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getFloat("total")
                 ));
             }
         } catch (SQLException sqe) {
@@ -256,6 +260,38 @@ public class CustomerRepository {
         return customerSpenderList;
     }
 
+    public ArrayList<CustomerGenre> customerGenre() {
+        ArrayList<CustomerGenre> customerGenreList = new ArrayList<>();
+        String sql = "SELECT COUNT(G.Name) AS MostPopular, G.Name FROM Genre AS G\n" +
+                " INNER JOIN Track T ON T.GenreId = G.GenreId\n" +
+                " INNER JOIN InvoiceLine IL on T.TrackId = IL.TrackId\n" +
+                " INNER JOIN Invoice I on IL.InvoiceId = I.InvoiceId\n" +
+                " INNER JOIN Customer C on I.CustomerId = C.CustomerId\n" +
+                "WHERE C.CustomerId = 20 GROUP BY G.GenreId ORDER BY COUNT(G.GenreId) DESC;";
+        try {
+            conn = SQLiteDBConnector.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                customerGenreList.add(new CustomerGenre(
+                        rs.getString("Name"),
+                        rs.getInt("MostPopular")
+                ));
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+            System.exit(-1);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException sqe) {
+                sqe.printStackTrace();
+                System.exit(-1);
+            }
+        }
+        return customerGenreList;
 
+
+    }
 
 }
