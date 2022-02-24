@@ -1,17 +1,17 @@
 package dk.qitsuk.otunes.controllers;
 
 import dk.qitsuk.otunes.dataaccess.dataaccessobjects.CustomerRepository;
-import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
+@Tag(name = "Customer")
+@RequestMapping("/api")
 public class CustomerController {
 
     private final ArrayList<Customer> customers = new ArrayList<>();
@@ -19,12 +19,13 @@ public class CustomerController {
 
     @GetMapping("/api/getAllCustomers")
     @Operation(summary = "Get all customers from the DB.")
-    private ArrayList<Customer> getAllCustomer() {
+    private Collection<Customer> getAllCustomer() {
         customerRepository = new CustomerRepository();
         return customerRepository.getAllCustomers();
     }
-    @GetMapping("/api/getCustomerById")
+    @GetMapping("/{getCustomerById}")
     @Operation(summary = "Get customer by ID.")
+    public Customer getCustomerById(@PathVariable String getCustomerById) { return customerService.getByID(customerId); }
     private Customer getCustomerById(@RequestParam int id) {
         customerRepository = new CustomerRepository();
         return customerRepository.getCustomerById(id);
@@ -44,7 +45,7 @@ public class CustomerController {
 
     @GetMapping("/api/getCustomerInCountry")
     @Operation(summary = "Get all customers in all countries and list them from most to least in each country.")
-    public ArrayList<CountryCount> getCountryCount() {
+    public ArrayList<Customer> getCountryCount() {
         customerRepository = new CustomerRepository();
         return customerRepository.numCustomerCountry();
     }
@@ -53,7 +54,7 @@ public class CustomerController {
     @Operation(summary = "Updating a customer found by id.")
     public String updateCustomerById(Customer customer, @RequestParam int id) {
         customerRepository = new CustomerRepository();
-        customerRepository.updateCustomerById(customer, id);
+        customerRepository.updateCustomerById(id);
         return "Customer updated.";
     }
 

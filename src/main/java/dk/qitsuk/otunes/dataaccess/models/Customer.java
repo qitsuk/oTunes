@@ -11,7 +11,8 @@ public class Customer {
     private String email;
 
     // A public constructor, to instantiate instances of the Customer.
-    public Customer(String firstName, String lastName, String country, String postalCode, String phoneNumber, String email) {
+    public Customer(int id,String firstName, String lastName, String country, String postalCode, String phoneNumber, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
@@ -46,6 +47,9 @@ public class Customer {
     public String getEmail() {
         return email;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -65,8 +69,5 @@ public class Customer {
         this.email = email;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
     // endregion
 }

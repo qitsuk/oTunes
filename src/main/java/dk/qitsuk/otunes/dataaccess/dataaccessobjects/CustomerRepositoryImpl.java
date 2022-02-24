@@ -3,112 +3,83 @@ package dk.qitsuk.otunes.dataaccess.dataaccessobjects;
 import dk.qitsuk.otunes.dataaccess.connector.SQLiteDBConnector;
 import dk.qitsuk.otunes.dataaccess.models.CountryCount;
 import dk.qitsuk.otunes.dataaccess.models.Customer;
+import dk.qitsuk.otunes.service.ConnectionFactory;
+import dk.qitsuk.otunes.service.DatabaseConnectionFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import
+
+
 
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
+    private final DatabaseConnectionFactory connectionFactory;
 
-    public ArrayList<Customer> getAllCustomers() {
-        customers = new ArrayList<>();
-        String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
-        try {
-            conn = SQLiteDBConnector.getInstance().getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                customers.add(customer = new Customer(
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Country"),
-                        rs.getString("PostalCode"),
-                        rs.getString("Phone"),
-                        rs.getString("Email")
-                ));
-                customer.setId(rs.getInt("CustomerId"));
-            }
-        } catch (SQLException sqe) {
-            sqe.printStackTrace();
-            System.exit(-1);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException sqe) {
-                sqe.printStackTrace();
-                System.exit(-1);
-            }
+    public CustomerRepositoryImpl(DatabaseConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    private Collection<Customer> processResultSet(ResultSet resultSet) throws SQLException {
+        ArrayList<Customer> customers = new ArrayList();
+
+        while(resultSet.next()) {
+            Customer customer = new Customer(
+                    resultSet.getInt("id"),
+                    resultSet.getString("firstName"),
+                    resultSet.getString("lastName"),
+                    resultSet.getString("country"),
+                    resultSet.getString("postalCode"),
+                    resultSet.getString("phoneNumber"),
+                    resultSet.getString("email")
+
+            );
+
+            customers.add(customer);
         }
+
         return customers;
     }
 
-    public Customer getCustomerById(int id) {
-        String sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE " +
-                "CustomerId=?";
-        try {
-            conn = SQLiteDBConnector.getInstance().getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, String.valueOf(id));
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                customer = new Customer(
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Country"),
-                        rs.getString("PostalCode"),
-                        rs.getString("Phone"),
-                        rs.getString("Email")
-                );
-                customer.setId(rs.getInt("CustomerId"));
+    public Collection<Customer> getAllCustomers() {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return processResultSet(resultSet);
             }
+
         } catch (SQLException sqe) {
             sqe.printStackTrace();
-            System.exit(-1);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException sqe) {
-                sqe.printStackTrace();
-                System.exit(-1);
-            }
+            return null;
         }
-        return customer;
     }
 
-    public Customer getCustomerByName(String firstName, String lastName) {
-        String sql = "SELECT * FROM Customer WHERE FirstName=? AND LastName=?";
+    public Customer getById (String id) {
+        try (Connection conn = connectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE " + "CustomerId=?");
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        try {
-            conn = SQLiteDBConnector.getInstance().getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                customer = new Customer(
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Country"),
-                        rs.getString("PostalCode"),
-                        rs.getString("Phone"),
-                        rs.getString("Email")
-                );
-                customer.setId(rs.getInt("CustomerId"));
-            }
+            resultSet.next();
+            return new Customer(
+                    resultSet.getInt("Id"),
+                    resultSet.getString("firstName"),
+                    resultSet.getString("Lastname"),
+                    resultSet.getString("Country"),
+                    resultSet.getString("PostalCode"),
+                    resultSet.getString("Phone"),
+                    resultSet.getString("Email")
+
+            );
+
         } catch (SQLException sqe) {
             sqe.printStackTrace();
-            System.exit(-1);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException sqe) {
-                sqe.printStackTrace();
-                System.exit(-1);
-            }
+            return null;
         }
-        return customer;
     }
+
 
     public ArrayList<Customer> getCustomerSection(int offset, int limit) {
         customerSection = new ArrayList<>();
@@ -121,6 +92,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 customerSection.add(customer = new Customer(
+                        rs.getInt("id"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
                         rs.getString("Country"),
@@ -171,7 +143,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return customer;
     }
 
-    public ArrayList<CountryCount> numCustomerCountry() {
+    public ArrayList<Customer> numCustomerCountry() {
         ArrayList<CountryCount> countryCountList = new ArrayList<>();
         String sql = "SELECT COUNT(CustomerId) AS NumberOfCustomers, Country FROM Customer GROUP BY Country ORDER BY COUNT(CustomerId) DESC";
         try {
@@ -196,6 +168,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             }
         }
         return countryCountList;
+    }
+
+    @Override
+    public Customer updateCustomerById(int id) {
+        return null;
     }
 
 }
